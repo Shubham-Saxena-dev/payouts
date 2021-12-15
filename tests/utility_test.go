@@ -36,7 +36,7 @@ func TestCreatePayout_whenPriceExceedsMaximumAmount_thenSplitPayouts(t *testing.
 
 	//then
 	assert.NoError(t, err)
-	assert.Equal(t, len(payout), 4)
+	assert.Equal(t, len(payout), 2)
 	var totalAmount int64
 	for index := range payout {
 		totalAmount += payout[index].Amount

@@ -50,17 +50,19 @@ func splitPayout() []models.Payout {
 
 func createNewPayouts(payout *models.Payout) []models.Payout {
 	var newPayouts []models.Payout
-	for payout.Amount >= MaximumAmount {
+	for payout.Amount > MaximumAmount { //10000
 		po := models.Payout{
 			SellerReference: payout.SellerReference,
-			Amount:          payout.Amount / 2,
+			Amount:          MaximumAmount, //30000
 			Currency:        payout.Currency}
-		createNewPayouts(&po)
 		newPayouts = append(newPayouts, po)
-		createNewPayouts(&po)
-		newPayouts = append(newPayouts, po)
-		payout.Amount /= 2
+		payout.Amount = payout.Amount - MaximumAmount
 	}
+	po := models.Payout{
+		SellerReference: payout.SellerReference,
+		Amount:          payout.Amount,
+		Currency:        payout.Currency}
+	newPayouts = append(newPayouts, po)
 
 	return newPayouts
 }
